@@ -7,7 +7,11 @@ package beans;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -24,9 +28,9 @@ public class User {
     private final static String PWD = "";
     
     private Connection cnx = null;
-    private Statement stat = null;
+    private PreparedStatement stat = null;
 
-    private Integer id;
+    private Long id;
     private String login;
     private String pwd;
     private String type;
@@ -41,7 +45,6 @@ public class User {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             cnx = DriverManager.getConnection(URL, USER, PWD);
-            stat = cnx.createStatement();
             }catch(Exception e)
         {
             e.printStackTrace();
@@ -49,7 +52,7 @@ public class User {
     }
     
   
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -67,7 +70,7 @@ public class User {
     }
 
    
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -112,8 +115,68 @@ public class User {
  //-------------------------------DAO----------------------------------------
     
     
+    public void addUser(User u){ // NOT YET TESTED
+        String req = "INSERT INTO users VALUES (null, '?','?','?','?','?',?);";
+        
+        try{
+            stat = cnx.prepareStatement(req);
+            stat.setString(1, u.login);
+            stat.setString(1, u.pwd);
+            stat.setString(1, u.type);
+            stat.setString(1, u.tel);
+            stat.setString(1, u.name);
+            stat.setLong(1, u.country.getId());
+            
+            stat.executeUpdate();
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public void deleteUser(Long userId){ //NOT YET TESTED
+        String req = "DELETE FROM users WHERE id = "+userId+";";
+        
+        try{
+            cnx.createStatement().executeUpdate(req);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
     
     
-   
+    public List<User> getAllUser(){ //NOT YET TESTED
+        String req = "SELECT * FROM users;";
+        List<User> l = new ArrayList<User>();
+        
+        try{
+            stat = cnx.prepareStatement(req);
+            ResultSet result = stat.executeQuery();
+            
+            while(result.next()){
+                User u = new User();
+                
+                fillUser(u,result);
+                l.add(u);
+            }    
+        }catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return l;   
+    }
+    
+   private void fillUser(User u , ResultSet result)throws SQLException{ //NOT YET TESTED
+        
+        u.id = result.getLong("id");
+        u.login = result.getString("login");
+        u.pwd = result.getString("pwd");
+        u.type = result.getString("type");
+        u.tel = result.getString("tel");
+        u.name = result.getString("name");
+//NOT YET   u.country = result.getString("country");        
+    }
     
 }

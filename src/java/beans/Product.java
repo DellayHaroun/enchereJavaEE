@@ -6,11 +6,15 @@
 package beans;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import sun.util.calendar.BaseCalendar;
 
 /**
  *
@@ -23,21 +27,21 @@ public class Product {
     private final static String USER = "root";
     private final static String PWD = "";
     
-    private Connection cnx = null;
-    private Statement stat = null;
+    private static Connection cnx = null;
+    private PreparedStatement stat = null;
     
     
-    private Integer id;
+    private Long id;
     private String label;
-    private String quantity;
-    private String basicPrice;
-    private BaseCalendar.Date date;
+    private Integer quantity;
+    private Float basicPrice;
+    private Date date;
     private String status;
     private String description;
     private User buyer;
     private User seller;
     private Local country;
-    private Category categorie;
+    private Category category;
     private String image;
 
     
@@ -45,14 +49,13 @@ public class Product {
         try{
             Class.forName("com.mysql.jdbc.Driver");
             cnx = DriverManager.getConnection(URL, USER, PWD);
-            stat = cnx.createStatement();
             }catch(Exception e)
         {
             e.printStackTrace();
         }   
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -60,15 +63,15 @@ public class Product {
         return label;
     }
 
-    public String getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public String getBasicPrice() {
+    public Float getBasicPrice() {
         return basicPrice;
     }
 
-    public BaseCalendar.Date getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -92,15 +95,15 @@ public class Product {
         return country;
     }
 
-    public Category getCategorie() {
-        return categorie;
+    public Category getCategory() {
+        return category;
     }
 
     public String getImage() {
         return image;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -108,15 +111,15 @@ public class Product {
         this.label = label;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public void setBasicPrice(String basicPrice) {
+    public void setBasicPrice(Float basicPrice) {
         this.basicPrice = basicPrice;
     }
 
-    public void setDate(BaseCalendar.Date date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -140,8 +143,8 @@ public class Product {
         this.country = country;
     }
 
-    public void setCategorie(Category categorie) {
-        this.categorie = categorie;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public void setImage(String image) {
@@ -152,9 +155,151 @@ public class Product {
   
  //-------------------------------DAO----------------------------------------
     
- 
+
+    public void addProduct(Product p){ //NOT YET TESTED
+        String req = "INSERT INTO products VALUES( null , '?', ?, ?, '?'"
+                + ", '?', '?', ?, ?, ?, ?, '?');";
+        try {
+            stat = cnx.prepareStatement(req);
+            stat.setString(1,p.label);
+            stat.setInt(2,p.quantity);
+            stat.setFloat(3,p.basicPrice);
+            stat.setDate(4,p.date);
+            stat.setString(5,p.status);
+            stat.setString(6,p.description);
+            stat.setLong(7,p.buyer.getId());
+            stat.setLong(8,p.seller.getId());
+            stat.setLong(9,p.country.getId());
+            stat.setLong(10,p.category.getId());
+            stat.setString(11,p.image);
+            
+            stat.executeUpdate();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public void deleteProduct(Long productId){ //NOT YET TESTED
+        String req = "DELETE FROM products WHERE id = ?;";
+        
+        try{
+            stat = cnx.prepareStatement(req);
+            stat.setLong(1,productId);
+            stat.executeUpdate();
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    
+    public List<Product> getAllProducts(){
+        String req = "SELECT * FROM products;";
+        List<Product> l = new ArrayList<Product>();
+        
+        try{
+            stat = cnx.prepareStatement(req);
+            ResultSet result = stat.executeQuery();
+            
+            while(result.next()){
+                Product p = new Product();
+                
+                fillProduct(p,result);
+                l.add(p);
+            }    
+        }catch(SQLException e)
+        {
+            e.printStackTrace();
+        }
+        
+        return l;   
+    }
+    
+    public Product getElementById(Long productId){
+        String req = "SELECT * FROM products WHERE id = ?";
+        
+        try{
+            stat= cnx.prepareStatement(req);
+            stat.setLong(1, productId);
+            ResultSet result = stat.executeQuery();
+            result.next();
+            
+            Product p = new Product();
+            fillProduct(p, result);
+            return p;
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
     
     
+    private void fillProduct(Product p , ResultSet result)throws SQLException{ //NOT YET TESTED
+        
+        p.id = result.getLong("id");
+        p.label = result.getString("label");
+        p.quantity = result.getInt("quantity");
+        p.basicPrice = result.getFloat("basicPrice");
+        p.date = result.getDate("date");
+        p.status = result.getString("status");
+        p.description = result.getString("description");
+//    NOT YET   p.buyer = result.getObject("buyer");
+//    NOT YET   p.seller = result.getLong("seller");
+//    NOT YET   p.country = result.getLong("country");
+//    NOT YET   p.category = result.getString("category");
+        p.image = result.getString("image");
+    }
+    
+    public List<Product> searchProduct(Product p){ //NOT YET TESTED
+        String req = "SELECT * FROM products WHERE 1 ";
+            req += (p.id != null)? "AND id = "+p.id : "";
+            req += (p.label != null)? "AND label = "+p.label : "";
+            req += (p.basicPrice != null)? "AND basicPrice = "+p.basicPrice : "";
+            req += (p.date != null)? "AND date = "+p.date : "";
+            req += (p.status != null)? "AND status = "+p.status : "";
+            req += (p.buyer.getId() != null)? "AND buyer = "+p.buyer.getId() : "";
+            req += (p.seller.getId() != null)? "AND seller = "+p.seller.getId() : "";
+            req += (p.country.getCountry() != null)? "AND country = "+p.country.getCountry() : "";
+            req += (p.category.getLabel() != null)? "AND category = "+p.category.getLabel() : "";
+        try{
+            stat = cnx.prepareStatement(req);
+            ResultSet result = stat.executeQuery();
+            List<Product> l = new ArrayList<Product>();
+            while(result.next()){
+                Product pAux = new Product();
+                fillProduct(pAux, result);
+                l.add(pAux);
+            }
+            return l;
+            
+        }
+        catch(SQLException e)
+        {
+                e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public boolean exist(Long productId , String label){
+        
+        String req = "SELECT id FROM products WHERE 1 ";
+            req += (productId != null)? "AND id = " + productId : "";
+            req += (label != null)? "AND label = " + label : "";
+            
+        
+        try{
+            stat = cnx.prepareStatement(req);
+            ResultSet result = stat.executeQuery();
+            return result.isBeforeFirst();
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return false;
+        
+    }
     
     
     
