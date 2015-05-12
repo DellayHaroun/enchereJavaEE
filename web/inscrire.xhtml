@@ -6,12 +6,12 @@ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
    <h:head>
 <title>Electronix Store</title>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
-<link rel="stylesheet" type="text/css" href="../css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
 
 <!--[if IE 6]>
 <link rel="stylesheet" type="text/css" href="iecss.css" />
 <![endif]-->
-<script type="text/javascript" src="../js/boxOver.js"></script>
+<script type="text/javascript" src="js/boxOver.js"></script>
 </h:head>
 <h:body>
 <div id="main_container">
@@ -20,19 +20,19 @@ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
   <div class="top_bar">
     <div class="top_search">
       <div class="search_text"><a href="#">Advanced Search</a></div>
-      <input type="text" class="search_input" name="search" />
-      <input type="image" src="../images/search.gif" class="search_bt"/>
+      <h:inputText  class="search_input"  />
+      <h:graphicImage  value="images/search.gif" class="search_bt"/>
     </div>
     <div class="languages">
       <div class="lang_text">Languages:</div>
-      <a href="#" class="lang"><img src="../images/en.gif" alt="" border="0" /></a> <a href="#" class="lang"><img src="../images/de.gif" alt="" border="0" /></a> </div>
+      <a href="#" class="lang"><img src="images/en.gif" alt="" border="0" /></a> <a href="#" class="lang"><img src="images/de.gif" alt="" border="0" /></a> </div>
   </div>
   <div id="header">
-    <div id="logo"> <a href="#"><img src="../images/logo.png" alt="" border="0" width="237" height="140" /></a> </div>
+    <div id="logo"> <a href="#"><img src="images/logo.png" alt="" border="0" width="237" height="140" /></a> </div>
     <div class="oferte_content">
-      <div class="top_divider"><img src="../images/header_divider.png" alt="" width="1" height="164" /></div>
+      <div class="top_divider"><img src="images/header_divider.png" alt="" width="1" height="164" /></div>
       <div class="oferta">
-        <div class="oferta_content"> <img src="../images/laptop.png" width="94" height="92" alt="" border="0" class="oferta_img" />
+        <div class="oferta_content"> <img src="images/laptop.png" width="94" height="92" alt="" border="0" class="oferta_img" />
           <div class="oferta_details">
             <div class="oferta_title">Samsung GX 2004 LM</div>
             <div class="oferta_text"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco </div>
@@ -40,7 +40,7 @@ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
         </div>
         <div class="oferta_pagination"> <span class="current">1</span> <a href="#">2</a> <a href="#">3</a> <a href="#">4</a> <a href="#">5</a> </div>
       </div>
-      <div class="top_divider"><img src="../images/header_divider.png" alt="" width="1" height="164" /></div>
+      <div class="top_divider"><img src="images/header_divider.png" alt="" width="1" height="164" /></div>
     </div>
     <!-- end of oferte_content-->
   </div>
@@ -50,9 +50,9 @@ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
       <ul class="menu">
         <li><a href="index.xhtml" class="nav1"> Home</a></li>
         <li class="divider"></li>
-        <li><a href="produits.html" class="nav2">Products</a></li>
+        <li><a href="produits.xhtml" class="nav2">Products</a></li>
         <li class="divider"></li>
-        <li><a href="#" class="nav3">Specials</a></li>
+        <li><a href="#" class="nav3">Boutiques</a></li>
         <li class="divider"></li>
         <li><a href="#" class="nav4">My account</a></li>
         <li class="divider"></li>
@@ -60,7 +60,7 @@ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
         <li class="divider"></li>
         <li><a href="#" class="nav5">Shipping</a></li>
         <li class="divider"></li>
-        <li><a href="contact.html" class="nav6">Contact Us</a></li>
+        <li><a href="contact.xhtml" class="nav6">Contact Us</a></li>
         <li class="divider"></li>
         <li class="currencies">Currencies
           <select>
@@ -94,12 +94,12 @@ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
       <div class="title_box">Special Products</div>
       <div class="border_box">
         <div class="product_title"><a href="details.html">Motorola 156 MX-VL</a></div>
-        <div class="product_img"><a href="details.html"><img src="../images/laptop.png" alt="" border="0" /></a></div>
+        <div class="product_img"><a href="details.html"><img src="images/laptop.png" alt="" border="0" /></a></div>
         <div class="prod_price"><span class="reduce">350$</span> <span class="price">270$</span></div>
       </div>
       <div class="title_box">Newsletter</div>
       <div class="border_box">
-        <input type="text" name="newsletter" class="newsletter_input" value="your email"/>
+          <h:inputText   class="newsletter_input" value="your email"/>
         <a href="#" class="join">join</a> </div>
       
     </div>
@@ -116,46 +116,45 @@ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
         <div class="center_prod_box_big">
           <div class="contact_form">
             <div class="form_row">
-              <label class="contact"><strong>Type compte:</strong></label>
-              <input type="text" class="contact_input" />
-            </div>
-            <div class="form_row">
-              <label class="contact"><strong>Nom Complet:</strong></label>
-              <input type="text" class="contact_input" />
-            </div>
-            <div class="form_row">
-              <label class="contact"><strong>Adresse:</strong></label>
-              <input type="text" class="contact_input" />
-            </div>
-            <div class="form_row">
-              <label class="contact"><strong>Ville:</strong></label>
-              <input type="text" class="contact_input" />
-            </div>
-            <div class="form_row">
-              <label class="contact"><strong>Email:</strong></label>
-              <input type="email" class="contact_input" />
-            </div>
-            <div class="form_row">
-              <div class="form_row">
-              <label class="contact"><strong>Retapez l'Email:</strong></label>
-              <input type="email" class="contact_input" />
-            </div>
-            <div class="form_row">
-              <label class="contact"><strong>Phone:</strong></label>
-              <input type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$" class="contact_input"/>
-            </div>
-            <div class="form_row">
-              <label class="contact"><strong>login:</strong></label>
-              <input type="text" class="contact_input" />
-            </div>
-            <div class="form_row">
-              <label class="contact"><strong>Password:</strong></label>
-              <input type="password" class="contact_input" />
-            </div>
-            <div class="form_row">
-              <label class="contact"><strong>Confirm password:</strong></label>
-              <input type="password" class="contact_input" />
-            </div>
+                <h:form class="form_row">
+                    <h:outputLabel class="contact" value="Enter  Your Compte Type : " />
+                    <h:inputText value="#{customerController.customer.firstName}" />
+                    
+                    <h:outputLabel class="contact" value="Enter your Full name: " />
+                    <h:inputText value="#{customerController.customer.firstName}" />
+                    
+                    <h:outputLabel class="contact" value="Enter your Adresse: " />
+                    <h:inputText value="#{customerController.customer.firstName}" />
+                    
+                    <h:outputLabel class="contact" value="Enter your Town: " />
+                    <h:inputText value="#{customerController.customer.firstName}" />
+                    
+                    <h:outputLabel class="contact" value="Enter your Email: " />
+                    <h:inputText value="#{customerController.customer.firstName}" />
+                    
+                    
+                    <h:outputLabel class="contact" value="Retape your Email:" />
+                    <h:inputText value="#{customerController.customer.firstName}" />
+                    
+                    <h:outputLabel class="contact" value="Enter your Phone:"/>
+                    <h:inputText value="#{customerController.customer.firstName}" />
+                    
+                    <h:outputLabel class="contact" value="Enter your login:" />
+                    <h:inputText value="#{customerController.customer.firstName}" />
+                    
+                        <h:outputLabel class="contact" value="Enter your passWord " />
+                        <h:inputSecret value="#{customerController.customer.firstName}" />
+                    
+                    <h:outputLabel class="contact" value="Confirm your passWord: " />
+                    <h:inputSecret value="#{customerController.customer.firstName}" />
+                </h:form>
+              
+          
+           
+            
+            
+            
+            
             <div class="form_row"> <a href="inscrire.html" class="contact">send</a> </div>
           </div>
         </div>
@@ -168,10 +167,10 @@ xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
   </div>
   <!-- end of main content -->
   <div class="footer">
-    <div class="left_footer"> <img src="../images/footer_logo.png" alt="" width="170" height="49"/> </div>
+    <div class="left_footer"> <img src="images/footer_logo.png" alt="" width="170" height="49"/> </div>
     <div class="center_footer"> Template name. All Rights Reserved 2008<br />
-      <a href="http://csscreme.com"><img src="../images/csscreme.jpg" alt="csscreme" border="0" /></a><br />
-      <img src="../images/payment.gif" alt="" /> </div>
+      <a href="http://csscreme.com"><img src="images/csscreme.jpg" alt="csscreme" border="0" /></a><br />
+      <img src="images/payment.gif" alt="" /> </div>
     <div class="right_footer"> <a href="#">home</a> <a href="#">about</a> <a href="#">sitemap</a> <a href="#">rss</a> <a href="contact.html">contact us</a> </div>
   </div>
 </div>
