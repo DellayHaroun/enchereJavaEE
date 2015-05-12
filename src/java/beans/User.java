@@ -179,7 +179,7 @@ public class User {
 //NOT YET   u.country = result.getString("country");        
     }
    
-   public User getElementById(Long userId){
+   public User getElementById(Long userId){ //NOT YET TESTED
         String req = "SELECT * FROM users WHERE id = ?";
         
         try{
@@ -195,8 +195,58 @@ public class User {
         }catch(SQLException e){
             e.printStackTrace();
         }
+        
+        return null;
+        
+    }
+   
+   
+   public List<User> searchUser(User u){ //NOT YET TESTED
+            
+        String req = "SELECT * FROM users WHERE 1 ";
+            req += (u.id != null)? "AND id = "+u.id : "";
+            req += (u.login != null)? "AND login = "+u.login : "";
+            req += (u.type != null)? "AND type = "+u.type : "";
+            req += (u.name != null)? "AND name = "+u.name : "";
+            req += (u.country.getCountry() != null)? "AND country = "+u.country.getCountry() : "";
+        try{
+            stat = cnx.prepareStatement(req);
+            ResultSet result = stat.executeQuery();
+            List<User> l = new ArrayList<User>();
+            while(result.next()){
+                User uAux = new User();
+                fillUser(uAux, result);
+                l.add(uAux);
+            }
+            return l;
+            
+        }
+        catch(SQLException e)
+        {
+                e.printStackTrace();
+        }
         return null;
     }
+   
+   
+   public boolean exist(Long userId , String login){ //NOT YET TESTED
+        
+        String req = "SELECT id FROM users WHERE 1 ";
+            req += (userId != null)? "AND id = " + userId : "";
+            req += (login != null)? "AND login = " + login : "";                   
+        try{
+            stat = cnx.prepareStatement(req);
+            ResultSet result = stat.executeQuery();
+            return result.isBeforeFirst();
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+        return false;
+        
+    }
+   
    
    
 }

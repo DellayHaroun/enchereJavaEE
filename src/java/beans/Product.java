@@ -281,7 +281,7 @@ public class Product {
         return null;
     }
     
-    public boolean exist(Long productId , String label){
+    public boolean exist(Long productId , String label){ //NOT YET TESTED
         
         String req = "SELECT id FROM products WHERE 1 ";
             req += (productId != null)? "AND id = " + productId : "";
