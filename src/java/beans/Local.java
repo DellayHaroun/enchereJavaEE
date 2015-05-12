@@ -73,10 +73,10 @@ public class Local {
     }
     
     public void deleteLocal(Local l){ //NOT YET TESTED
-        String req = "DELETE FROM local WHERE ";
+        String req = "DELETE FROM local WHERE 1"; 
+            req += (l.id != null)? "AND id = "+l.id : "";
+            req += (l.country != null)? "AND country = "+l.country : "";
         
-            
-            
             
         try{
             stat = cnx.prepareStatement(req);
@@ -87,18 +87,18 @@ public class Local {
         }
     }
     
-    public List<Category> getAllCategory(){ // NOT YET TESTED
-        String req = "SELECT * FROM category;";
-        List<Category> l = new ArrayList<Category>();
+    public List<Local> getAllLocal(){ // NOT YET TESTED
+        String req = "SELECT * FROM local;";
+        List<Local> l = new ArrayList<Local>();
         
         try{
             stat = cnx.prepareStatement(req);
             ResultSet result = stat.executeQuery();
             
             while(result.next()){
-                Category c = new Category();
-                fillCategory(c,result);
-                l.add(c);
+                Local lo = new Local();
+                fillLocal(lo,result);
+                l.add(lo);
             }    
         }catch(SQLException e)
         {
@@ -108,27 +108,23 @@ public class Local {
         return l;   
     }
     
-    private void fillCategory(Category c , ResultSet result)throws SQLException{ //NOT YET TESTED
-        c.id = result.getLong("id");
-        c.label = result.getString("label");
+    private void fillLocal(Local lo , ResultSet result)throws SQLException{ //NOT YET TESTED
+        lo.id = result.getLong("id");
+        lo.country = result.getString("country");
     }
     
-    public void updateCategory(Category c){//NOT YET TESTED
-        String req = "UPDATE category c SET label = ? WHERE id = ?";
+    public void updateLocal(Local lo){//NOT YET TESTED
+        String req = "UPDATE local  SET country = '?' WHERE id = ?";
         
         try{
             stat = cnx.prepareStatement(req);
-            stat.setString(1, c.label);
-            stat.setLong(2, c.id);
-            
+            stat.setString(1, lo.country);
+            stat.setLong(2, lo.id);
             stat.executeQuery();
-            
             
         }catch(SQLException e){
             e.printStackTrace();
-        }
-        
+            
+        }        
     }
-
-    
 }
