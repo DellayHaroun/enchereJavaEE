@@ -215,6 +215,33 @@ public class Product {
         return l;   
     }
     
+    public void updateProduct(Product p){//NOT YET TESTED
+        String req = "UPDATE products SET id = ?";
+            req += (p.label != null)? ", label = '?' " : "";
+            req += (p.quantity != null)? ", quantity = ? " : "";
+            req += (p.date != null)? ", date = '?'" : ""; //NOT SURE THIS WILL WORK
+            req += (p.status != null)? ", status = '?' " : "";
+            req += (p.seller != null)? ", seller = '?' " : "";
+            req += "WHERE id = "+p.id+";";
+           
+        try{
+            stat = cnx.prepareStatement(req);
+            
+            stat.setLong(1, p.id);
+            stat.setString(2, p.label);
+            stat.setInt(3, p.quantity);
+            stat.setDate(4, p.date);
+            stat.setString(5, p.status);
+            stat.setLong(6, p.seller.getId());
+            
+            stat.executeQuery();
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }        
+    }
+    
+    
     public Product getElementById(Long productId){
         String req = "SELECT * FROM products WHERE id = ?";
         
