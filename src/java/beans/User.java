@@ -144,8 +144,7 @@ public class User {
             e.printStackTrace();
         }
     }
-    
-    
+        
     public List<User> getAllUser(){ //NOT YET TESTED
         String req = "SELECT * FROM users;";
         List<User> l = new ArrayList<User>();
