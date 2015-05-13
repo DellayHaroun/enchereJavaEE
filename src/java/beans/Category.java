@@ -15,10 +15,6 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-/**
- *
- * @author amine/haroun
- */
 @ManagedBean
 @RequestScoped
 public class Category {
@@ -131,6 +127,25 @@ public class Category {
         }
         
     }
+    
+    public Category getCategory(Long categoryId){ //NOT YET TESTED
+        String req = "SELECT * FROM category WHERE id = ?";
+        
+        try{
+            stat = cnx.prepareStatement(req);
+            stat.setLong(1, categoryId);
             
-
-}
+            ResultSet result = stat.executeQuery();
+            result.next();
+            
+            id = categoryId;
+            label = result.getString("label");
+            
+            return this;
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+}            

@@ -156,22 +156,23 @@ public class Product {
  //-------------------------------DAO----------------------------------------
     
 
-    public void addProduct(Product p){ //NOT YET TESTED
+
+    public void addProduct(){ //NOT YET TESTED
         String req = "INSERT INTO products VALUES( null , '?', ?, ?, '?'"
                 + ", '?', '?', ?, ?, ?, ?, '?');";
         try {
             stat = cnx.prepareStatement(req);
-            stat.setString(1,p.label);
-            stat.setInt(2,p.quantity);
-            stat.setFloat(3,p.basicPrice);
-            stat.setDate(4,p.date);
-            stat.setString(5,p.status);
-            stat.setString(6,p.description);
-            stat.setLong(7,p.buyer.getId());
-            stat.setLong(8,p.seller.getId());
-            stat.setLong(9,p.country.getId());
-            stat.setLong(10,p.category.getId());
-            stat.setString(11,p.image);
+            stat.setString(1,label);
+            stat.setInt(2,quantity);
+            stat.setFloat(3,basicPrice);
+            stat.setDate(4,date);
+            stat.setString(5,status);
+            stat.setString(6,description);
+            stat.setLong(7,buyer.getId());
+            stat.setLong(8,seller.getId());
+            stat.setLong(9,country.getId());
+            stat.setLong(10,category.getId());
+            stat.setString(11,image);
             
             stat.executeUpdate();
             
@@ -271,11 +272,19 @@ public class Product {
         p.date = result.getDate("date");
         p.status = result.getString("status");
         p.description = result.getString("description");
-//    NOT YET   p.buyer = result.getObject("buyer");
-//    NOT YET   p.seller = result.getLong("seller");
-//    NOT YET   p.country = result.getLong("country");
-//    NOT YET   p.category = result.getString("category");
+        Long buyerId = result.getLong("buyer");
+        Long sellerId = result.getLong("seller");
+        Long countryId = result.getLong("country");
+        Long categoryId = result.getLong("category");
         p.image = result.getString("image");
+        
+        p.buyer = new User(); p.seller = new User(); p.country = new Local();
+        p.category = new Category();
+        
+        p.buyer.getUser(buyerId);
+        p.seller.getUser(sellerId);
+        p.country.getLocal(countryId);
+        p.category.getCategory(categoryId);
     }
     
     public List<Product> searchProduct(Product p){ //NOT YET TESTED
