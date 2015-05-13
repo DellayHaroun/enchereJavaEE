@@ -5,6 +5,9 @@
  */
 package beans;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -42,7 +46,8 @@ public class Product {
     private User seller;
     private Local country;
     private Category category;
-    private String image;
+    private Part image;
+    private String imagePath;
 
     
     public Product() {
@@ -55,6 +60,15 @@ public class Product {
         }   
     }
 
+    
+    public void setImage(Part image) {
+        this.image = image;
+    }
+
+    public Part getImage() {
+        return image;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -99,9 +113,6 @@ public class Product {
         return category;
     }
 
-    public String getImage() {
-        return image;
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -146,11 +157,6 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-    
     
   
  //-------------------------------DAO----------------------------------------
@@ -335,10 +341,24 @@ public class Product {
         }
         
         return false;
-        
     }
     
-    
-    
-    
+    public void upload(){
+        try{
+            
+            InputStream in = image.getInputStream();
+            String name = image.getSubmittedFileName();
+            String workingDir = System.getProperty("user.dir");
+
+            OutputStream out = new FileOutputStream(name);
+            int c;
+            while((c = in.read() ) != -1 ){
+                out.write(c);
+            }         
+        }  
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }
+
