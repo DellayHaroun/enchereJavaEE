@@ -2,9 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-   <h:head>
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+ <h:head>
 <title>Electronix Store</title>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
 <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -16,13 +15,11 @@
 </h:head>
 <h:body>
 <div id="main_container">
-    
-    
   <div class="top_bar">
     <div class="top_search">
       <div class="search_text"><a href="#">Advanced Search</a></div>
-      <h:inputText  class="search_input"  />
-      <h:graphicImage  value="images/search.gif" class="search_bt"/>
+      <input type="text" class="search_input" name="search" />
+      <input type="image" src="images/search.gif" class="search_bt"/>
     </div>
     <div class="languages">
       <div class="lang_text">Languages:</div>
@@ -53,7 +50,7 @@
         <li class="divider"></li>
         <li><a href="produits.xhtml" class="nav2">Products</a></li>
         <li class="divider"></li>
-        <li><a href="#" class="nav3">Boutiques</a></li>
+        <li><a href="boutiques.xhtml" class="nav3">Boutiques</a></li>
         <li class="divider"></li>
         <li><a href="#" class="nav4">My account</a></li>
         <li class="divider"></li>
@@ -72,25 +69,15 @@
       </ul>
       <div class="right_menu_corner"></div>
     </div>
-      
-      
     <!-- end of menu tab -->
     <div class="crumb_navigation"> Navigation: <span class="current">Home</span> </div>
     <div class="left_content">
       <div class="title_box">Categories</div>
       <ul class="left_menu">
-        <li class="odd"><a href="#">Processors</a></li>
-        <li class="even"><a href="#">Motherboards</a></li>
-        <li class="odd"><a href="#">Desktops</a></li>
-        <li class="even"><a href="#">Laptops &amp; Notebooks</a></li>
-        <li class="odd"><a href="#">Processors</a></li>
-        <li class="even"><a href="#">Motherboards</a></li>
-        <li class="odd"><a href="#">Processors</a></li>
-        <li class="even"><a href="#">Motherboards</a></li>
-        <li class="odd"><a href="#">Desktops</a></li>
-        <li class="even"><a href="#">Laptops &amp; Notebooks</a></li>
-        <li class="odd"><a href="#">Processors</a></li>
-        <li class="even"><a href="#">Motherboards</a></li>
+          <ui:repeat  value="#{category.allCategory}" var="i" >
+              <li class="odd"><a href="#">#{i.label}</a></li>
+          </ui:repeat>
+        
       </ul>
       <div class="title_box">Special Products</div>
       <div class="border_box">
@@ -100,85 +87,50 @@
       </div>
       <div class="title_box">Newsletter</div>
       <div class="border_box">
-          <h:inputText   class="newsletter_input" value="your email"/>
+          <h:inputText class="newsletter_input" value="your email"/>
         <a href="#" class="join">join</a> </div>
       
     </div>
-    
-    
-    
-    
-    
-    <!-- end of left content -->
-    <div class="center_content">
-      <div class="center_title_bar">Inscrivez Vous :D </div>
+  </div>
+
+<div class="center_content">
+    <div class="center_title_bar"><a href ="inscrire.xhtml"> newMember? </a></div> 
+      <div class="center_title_bar">Sign In :D </div>
       <div class="prod_box_big">
         <div class="top_prod_box_big"></div>
         <div class="center_prod_box_big">
           <div class="contact_form">
             <div class="form_row">
                 <h:form class="form_row">
-                    <tr>
-                    <td>
-                    <h:selectOneRadio class="contact" value ="Enter Your Compte Type:">
-                    <f:selectItem itemLabel="user" itemValue="user"></f:selectItem>
-                    <f:selectItem itemLabel="biblio" itemValue="biblio"></f:selectItem>
-                    </h:selectOneRadio>
-                    </td>
-                     </tr>
-                    <h:outputLabel class="contact" value="Enter  Your Compte Type : " />
-                    <h:inputText value="#{customerController.customer.firstName}" />
+                    <h:outputLabel class="contact" value="Enter  Your Login : " />
+                    <h:inputText value="#{connection.login}" />
                     
-                    <h:outputLabel class="contact" value="Enter your Full name: " />
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                    <h:outputLabel class="contact" value="Enter your Adresse: " />
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                    <h:outputLabel class="contact" value="Enter your Town: " />
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                    <h:outputLabel class="contact" value="Enter your Email: " />
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                    
-                    <h:outputLabel class="contact" value="Retape your Email:" />
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                    <h:outputLabel class="contact" value="Enter your Phone:"/>
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                    <h:outputLabel class="contact" value="Enter your login:" />
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                        <h:outputLabel class="contact" value="Enter your passWord " />
-                        <h:inputSecret value="#{customerController.customer.firstName}" />
-                    
-                    <h:outputLabel class="contact" value="Confirm your passWord: " />
-                    <h:inputSecret value="#{customerController.customer.firstName}" />
-<<<<<<< HEAD
-                </p:panel>  
-=======
->>>>>>> 33f97ea707ab882d1d2559c61f5193033a667804
-                </h:form>
-              
-          
-           
-            
-            
-            
-            
-            <div class="form_row"> <a href="inscrire.html" class="contact">send</a> </div>
+                    <h:outputLabel class="contact" value="Enter your PassWord: " />
+                    <h:inputText value="#{connection.pwd}" />
+                    <h:commandButton action="#{connection.connect}" value="Submit"/>
+                </h:form  >
           </div>
         </div>
         <div class="bottom_prod_box_big"></div>
       </div>
     </div>
-    <!-- end of center content -->
-   
-    <!-- end of right content -->
-  </div>
-  <!-- end of main content -->
+</div>
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- end of left content -->
+     <!-- end of main content -->
   <div class="footer">
     <div class="left_footer"> <img src="images/footer_logo.png" alt="" width="170" height="49"/> </div>
     <div class="center_footer"> Template name. All Rights Reserved 2008<br />
@@ -187,6 +139,7 @@
     <div class="right_footer"> <a href="#">home</a> <a href="#">about</a> <a href="#">sitemap</a> <a href="#">rss</a> <a href="contact.html">contact us</a> </div>
   </div>
 </div>
-</div>    
-</h:body>
+<!-- end of main_container -->
+<!--<div align=center>This template  downloaded form <a href='#'>dellay foundation</a></div>
+--></h:body>
 </html>

@@ -115,6 +115,7 @@ public class User {
  //-------------------------------DAO----------------------------------------
     
     
+
     public String addUser(){ // NOT YET TESTED
         
         if(alreadyExist(login)) return "index.xhtml?inscription=false";

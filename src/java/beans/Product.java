@@ -162,6 +162,7 @@ public class Product {
  //-------------------------------DAO----------------------------------------
     
 
+
     public void addProduct(){ //NOT YET TESTED
         String req = "INSERT INTO products VALUES( null , '?', ?, ?, '?'"
                 + ", '?', '?', ?, ?, ?, ?, '?');";
