@@ -132,6 +132,27 @@ public class Category {
         }
         
     }
+    
+    public Category getCategory(Long categoryId){ //NOT YET TESTED
+        String req = "SELECT * FROM category WHERE id = ?";
+        
+        try{
+            stat = cnx.prepareStatement(req);
+            stat.setLong(1, categoryId);
+            
+            ResultSet result = stat.executeQuery();
+            result.next();
+            
+            id = categoryId;
+            label = result.getString("label");
+            
+            return this;
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
             
 
 }

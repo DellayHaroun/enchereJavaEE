@@ -27,7 +27,7 @@ public class User {
     private final static String USER = "root";
     private final static String PWD = "";
     
-    private Connection cnx = null;
+    private static Connection cnx = null;
     private PreparedStatement stat = null;
 
     private Long id;
@@ -115,24 +115,27 @@ public class User {
  //-------------------------------DAO----------------------------------------
     
     
-    public void addUser(User u){ // NOT YET TESTED
+    public String addUser(){ // NOT YET TESTED
+        
+        if(alreadyExist(login)) return "index.xhtml?inscription=false";
+        
         String req = "INSERT INTO users VALUES (null, '?','?','?','?','?',?);";
         
         try{
             stat = cnx.prepareStatement(req);
-            stat.setString(1, u.login);
-            stat.setString(1, u.pwd);
-            stat.setString(1, u.type);
-            stat.setString(1, u.tel);
-            stat.setString(1, u.name);
-            stat.setLong(1, u.country.getId());
+            stat.setString(1, login);
+            stat.setString(1, pwd);
+            stat.setString(1, type);
+            stat.setString(1, tel);
+            stat.setString(1, name);
+            stat.setLong(1, country.getId());
             
             stat.executeUpdate();
             
         }catch(SQLException e){
             e.printStackTrace();
         }
-        
+        return "index.xhtml?inscription=true";
     }
     
     public void deleteUser(Long userId){ //NOT YET TESTED
@@ -167,15 +170,17 @@ public class User {
         return l;   
     }
     
-   private void fillUser(User u , ResultSet result)throws SQLException{ //NOT YET TESTED
+   private void fillUser(User u ,ResultSet result)throws SQLException{ //NOT YET TESTED
         
-        u.id = result.getLong("id");
+        u.id =result.getLong("id");
         u.login = result.getString("login");
         u.pwd = result.getString("pwd");
         u.type = result.getString("type");
         u.tel = result.getString("tel");
         u.name = result.getString("name");
-//NOT YET   u.country = result.getString("country");        
+        Long countryId = result.getLong("country");        
+        u.country = new Local();
+        u.country.getLocal(countryId);
     }
    
    public User getElementById(Long userId){ //NOT YET TESTED
@@ -228,13 +233,13 @@ public class User {
     }
    
    
-   public boolean exist(Long userId , String login){ //NOT YET TESTED
+   public boolean alreadyExist(String login){ //NOT YET TESTED
         
-        String req = "SELECT id FROM users WHERE 1 ";
-            req += (userId != null)? "AND id = " + userId : "";
-            req += (login != null)? "AND login = " + login : "";                   
+        String req = "SELECT id FROM users WHERE login = '?';";
+
         try{
             stat = cnx.prepareStatement(req);
+            stat.setString(1,login);
             ResultSet result = stat.executeQuery();
             return result.isBeforeFirst();
             
@@ -246,6 +251,54 @@ public class User {
         
     }
    
+   public boolean exist(String login , String pwd){
+       String req = "SELECT id FROM users WHERE login = '?' AND pwd = '?';";
+       
+       try{
+           stat = cnx.prepareStatement(req);
+           stat.setString(1,login);
+           stat.setString(2,pwd);
+           ResultSet result = stat.executeQuery();
+           return result.isBeforeFirst();
+       }catch(SQLException e){
+           e.printStackTrace();
+       }
+       return false;
+   }
+  
+   public Long getIdByLogin(String login){
+       String req = "SELECT id FROM users WHERE login = '?'";
+       try{
+           stat = cnx.prepareStatement(req);
+           stat.setString(1,login);
+           ResultSet result = stat.executeQuery();
+           if(result.next() == false) return null;
+           
+           return result.getLong("id");
+       }catch(SQLException e){
+           e.printStackTrace();
+       }
+       return null;
+   }
    
-   
+    public User getUser(Long userId){ //NOT YET TESTED
+        String req = "SELECT * FROM user WHERE id = ?";
+        
+        try{
+            stat = cnx.prepareStatement(req);
+            stat.setLong(1, userId);
+            
+            ResultSet result = stat.executeQuery();
+            result.next();
+            
+            fillUser(this, result);
+            
+            return this;
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+            
 }

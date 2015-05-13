@@ -151,11 +151,14 @@ public class Message {
     private void fillMessage(Message m , ResultSet result)throws SQLException{ //NOT YET TESTED
         m.msg = result.getString("msg");
         m.date=result.getDate("date");
- //NOT YET       m.sender = result.getLong("sender");
-//NOT YET        m.receiver = result.getLong("receiver");
+        m.sender = new User();
+        m.receiver = new User();
+        
+        Long senderId =  result.getLong("sender");
+        Long receiverId =  result.getLong("receiver");
+        m.sender.getUser(senderId);
+        m.receiver.getUser(receiverId);              
+        
     }
-    
-    
-    
     
 }

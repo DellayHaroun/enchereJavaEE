@@ -127,4 +127,28 @@ public class Local {
             
         }        
     }
+    
+     public Local getLocal(Long localId){ //NOT YET TESTED
+        String req = "SELECT * FROM local WHERE id = ?";
+        
+        try{
+            stat = cnx.prepareStatement(req);
+            stat.setLong(1, localId);
+            
+            ResultSet result = stat.executeQuery();
+            result.next();
+            
+            id = localId;
+            country = result.getString("country");
+            
+            return this;
+            
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+            
+    
+    
 }

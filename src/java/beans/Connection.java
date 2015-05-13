@@ -4,27 +4,35 @@ package beans;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletResponse;
 
 
 @ManagedBean
 @RequestScoped
 public class Connection {
+    
+    private String login;
+    private String pwd;
 
-   
-    public void logout(){
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPwd(String pwd) {
+        this.pwd = pwd;
+    }
+    
+    public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         
-        try{
-            FacesContext context = FacesContext.getCurrentInstance();
-            HttpServletResponse response =(HttpServletResponse)context.getExternalContext().getResponse();
-
-            response.sendRedirect("index.xhtml");
-
-            context.responseComplete();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
+        return "index.xhtml";
 
     }
     
@@ -35,20 +43,22 @@ public class Connection {
         return (o != null)? true : false;
     }
     
-    public String connect(int id){
+    public String connect(){ //NOT YET TESTED
+        
+        User u = new User();
+        
+        if(!u.exist(login, pwd))
+            return "index.xhtml?connected=false";
+        
+        Long id = u.getIdByLogin(login);
+
         Object o = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("id", id);
-        return "page1";
-                
+        return "index.xhtml?connected=true";
     }
     
     public Long getId(){ //NOT YET TESTED
         Long id = (Long)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
         
         return id;
-
     }
-    
-   
-    
-    
 }
