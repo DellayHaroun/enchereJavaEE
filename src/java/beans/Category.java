@@ -58,7 +58,7 @@ public class Category {
 //-------------------------------DAO----------------------------------------
     
      public void addCategory(Category c){ //NOT YET TESTED
-        String req = "INSERT INTO category VALUES( null , '?');";
+        String req = "INSERT INTO category VALUES( null , ?);";
         try {
             stat = cnx.prepareStatement(req);
             stat.setString(1, c.label);
