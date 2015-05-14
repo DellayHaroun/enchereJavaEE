@@ -19,7 +19,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class Category {
 
-    private final static String URL = "jdbc:mysql://localhost:3306/test";
+    private final static String URL = "jdbc:mysql://localhost:3306/enchers";
     private final static String USER = "root";
     private final static String PWD = "";
     private Connection cnx = null;
@@ -86,18 +86,24 @@ public class Category {
     }
     
     public List<Category> getAllCategory(){ // NOT YET TESTED
+        
         String req = "SELECT * FROM category;";
         List<Category> l = new ArrayList<Category>();
         
         try{
             stat = cnx.prepareStatement(req);
             ResultSet result = stat.executeQuery();
+            System.out.println("HELLLLOOOO  WOOOORRRLLLLD");
+
             
             while(result.next()){
+                
                 Category c = new Category();
                 fillCategory(c,result);
                 l.add(c);
             }    
+                
+
         }catch(SQLException e)
         {
             e.printStackTrace();
