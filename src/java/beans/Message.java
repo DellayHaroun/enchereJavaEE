@@ -91,7 +91,7 @@ public class Message {
 //-------------------------------DAO----------------------------------------
     
     public void addMessage(Message m){ //NOT YET TESTED
-        String req = "INSERT INTO message VALUES( null , '?', NOW(), ?, '?');";
+        String req = "INSERT INTO message VALUES( null , ?, NOW(), ?, ?);";
         try {
             stat = cnx.prepareStatement(req);
             stat.setString(1, m.msg);

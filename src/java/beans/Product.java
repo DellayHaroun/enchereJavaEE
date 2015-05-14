@@ -167,8 +167,8 @@ public class Product {
 
     public void addProduct(){ //NOT YET TESTED
         upload();
-        String req = "INSERT INTO products VALUES( null , '?', ?, ?, '?'"
-                + ", '?', '?', ?, ?, '?', ?, '?');";
+        String req = "INSERT INTO products VALUES( null , ?, ?, ?, ?"
+                + ", ?, ?, ?, ?, ?, ?, ?);";
         try {
             stat = cnx.prepareStatement(req);
             stat.setString(1,label);
@@ -227,11 +227,11 @@ public class Product {
     
     public void updateProduct(){//NOT YET TESTED
         String req = "UPDATE products SET id = ?";
-            req += (label != null)? ", label = '?' " : "";
+            req += (label != null)? ", label = ? " : "";
             req += (quantity != null)? ", quantity = ? " : "";
-            req += (date != null)? ", date = '?'" : ""; //NOT SURE THIS WILL WORK
-            req += (status != null)? ", status = '?' " : "";
-            req += (seller != null)? ", seller = '?' " : "";
+            req += (date != null)? ", date = ?" : ""; //NOT SURE THIS WILL WORK
+            req += (status != null)? ", status = ? " : "";
+            req += (seller != null)? ", seller = ? " : "";
             req += "WHERE id = "+id+";";
            
         try{

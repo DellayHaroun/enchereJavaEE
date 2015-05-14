@@ -254,7 +254,7 @@ public class User {
     }
    
    public boolean exist(String login , String pwd){
-       String req = "SELECT id FROM users WHERE login = '?' AND pwd = '?';";
+       String req = "SELECT id FROM users WHERE login = ? AND pwd = ?;";
        
        try{
            stat = cnx.prepareStatement(req);
@@ -269,7 +269,7 @@ public class User {
    }
   
    public Long getIdByLogin(String login){
-       String req = "SELECT id FROM users WHERE login = '?'";
+       String req = "SELECT id FROM users WHERE login = ?";
        try{
            stat = cnx.prepareStatement(req);
            stat.setString(1,login);

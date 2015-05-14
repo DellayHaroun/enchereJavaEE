@@ -83,7 +83,7 @@ public class Enchers {
     
     
     public void addEnchers(){ //NOT YET TESTED
-        String req = "INSERT INTO enchers VALUES( null , '?' , ? , ? , ?);";
+        String req = "INSERT INTO enchers VALUES( null , ? , ? , ? , ?);";
         try {
             stat = cnx.prepareStatement(req);
             stat.setDate(1, date);
