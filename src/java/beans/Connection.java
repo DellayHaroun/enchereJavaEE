@@ -44,7 +44,7 @@ public class Connection {
     }
     
     public String connect(){ //NOT YET TESTED
-        
+
         User u = new User();
         
         if(!u.exist(login, pwd))
@@ -54,8 +54,9 @@ public class Connection {
         
         String login = User.getElementById(id).getLogin();
 
-         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("id", id);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("login", login);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("id", id);
+
         return "index.xhtml?connected=true";
     }
     
