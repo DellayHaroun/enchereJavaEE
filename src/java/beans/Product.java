@@ -48,6 +48,14 @@ public class Product {
     private User seller;
     private String adress;
     private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
     private Part image;
     private String imagePath;
 
@@ -154,13 +162,6 @@ public class Product {
         this.adress = adress;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     
         
@@ -184,11 +185,8 @@ public class Product {
             stat.setString(1,label);
             stat.setInt(2,quantity);
             stat.setFloat(3,basicPrice);
-            
-            
             java.sql.Date d = new java.sql.Date(date.getTime());
-            
-            stat.setDate(4,d);
+            stat.setDate(4,  d);
             stat.setString(5,status);
             stat.setString(6,description);
             stat.setLong(7,buyer.getId());
