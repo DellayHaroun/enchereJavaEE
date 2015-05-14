@@ -86,6 +86,7 @@ public class Category {
     }
     
     public List<Category> getAllCategory(){ //TESTED WITH SUCCESS
+
         
         String req = "SELECT * FROM category;";
         List<Category> l = new ArrayList<Category>();
@@ -93,7 +94,6 @@ public class Category {
         try{
             stat = cnx.prepareStatement(req);
             ResultSet result = stat.executeQuery();
-
             
             while(result.next()){
                 
