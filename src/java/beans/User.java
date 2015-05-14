@@ -116,7 +116,7 @@ public class User {
     
 
     public String addUser(){ // TESTED WITH SUCCESS
-        if(alreadyExist(login)) return "index.xhtml?inscription=false";
+        if(alreadyExist(login)) return "produiuts.xhtml?inscription=false";
         
         String req = "INSERT INTO users VALUES (null, ? , ? , ? , ? , ? , ? );";
         
@@ -235,13 +235,13 @@ public class User {
     }
    
    
-   public boolean alreadyExist(String login){ //NOT YET TESTED
+   public boolean alreadyExist(String login){ //TESTED WITH SUCCESS
         
-        String req = "SELECT id FROM users WHERE login = 'gg';";
+        String req = "SELECT id FROM users WHERE login = ?;";
 
         try{
             stat = cnx.prepareStatement(req);
-         //   stat.setString(1,"gggg");
+            stat.setString(1,login);
             ResultSet result = stat.executeQuery();
             return result.isBeforeFirst();
             
