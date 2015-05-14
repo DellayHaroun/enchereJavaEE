@@ -5,7 +5,7 @@
  */
 package beans;
 
-import java.sql.Date;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -86,7 +86,7 @@ public class Enchers {
         String req = "INSERT INTO enchers VALUES( null , ? , ? , ? , ?);";
         try {
             stat = cnx.prepareStatement(req);
-            stat.setDate(1, date);
+            stat.setDate(1, (java.sql.Date) date);
             stat.setFloat(2 ,price);
             stat.setLong(3 , user.getId());
             stat.setLong(4 , product.getId());

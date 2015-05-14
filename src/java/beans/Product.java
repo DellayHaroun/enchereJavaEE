@@ -9,7 +9,7 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -177,7 +177,7 @@ public class Product {
             stat.setString(1,label);
             stat.setInt(2,quantity);
             stat.setFloat(3,basicPrice);
-            stat.setDate(4,date);
+            stat.setDate(4, (java.sql.Date) date);
             stat.setString(5,status);
             stat.setString(6,description);
             stat.setLong(7,buyer.getId());
@@ -243,7 +243,7 @@ public class Product {
             stat.setLong(1, id);
             stat.setString(2, label);
             stat.setInt(3, quantity);
-            stat.setDate(4, date);
+            stat.setDate(4, (java.sql.Date) date);
             stat.setString(5, status);
             stat.setLong(6, seller.getId());
             
