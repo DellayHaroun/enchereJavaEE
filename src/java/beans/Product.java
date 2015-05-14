@@ -46,7 +46,7 @@ public class Product {
     private String description;
     private User buyer;
     private User seller;
-    private Local country;
+    private String adress;
     private Category category;
     private Part image;
     private String imagePath;
@@ -107,8 +107,8 @@ public class Product {
         return seller;
     }
 
-    public Local getCountry() {
-        return country;
+    public String getAdress() {
+        return adress;
     }
 
     public Category getCategory() {
@@ -152,8 +152,8 @@ public class Product {
         this.seller = seller;
     }
 
-    public void setCountry(Local country) {
-        this.country = country;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public void setCategory(Category category) {
@@ -170,8 +170,8 @@ public class Product {
         Long userId =(Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
         System.out.println(userId);
         status = "pending";
-        String req = "INSERT INTO products VALUES( null , '?', ?, ?, '?'"
-                + ", '?', '?', ?, ?, ?, ?, '?');";
+        String req = "INSERT INTO products VALUES( null , ?, ?, ?, ?"
+                + ", ?, ?, ?, ?, ?, ?, ?);";
         try {
             stat = cnx.prepareStatement(req);
             stat.setString(1,label);
@@ -182,7 +182,7 @@ public class Product {
             stat.setString(6,description);
             stat.setLong(7,buyer.getId());
             stat.setLong(8,seller.getId());
-            stat.setLong(9,country.getId());
+            stat.setString(9, adress);
             stat.setLong(10,category.getId());
             stat.setString(11,imagePath);
             
@@ -230,11 +230,11 @@ public class Product {
     
     public void updateProduct(){//NOT YET TESTED
         String req = "UPDATE products SET id = ?";
-            req += (label != null)? ", label = '?' " : "";
+            req += (label != null)? ", label = ? " : "";
             req += (quantity != null)? ", quantity = ? " : "";
-            req += (date != null)? ", date = '?'" : ""; //NOT SURE THIS WILL WORK
-            req += (status != null)? ", status = '?' " : "";
-            req += (seller != null)? ", seller = '?' " : "";
+            req += (date != null)? ", date = ?" : ""; //NOT SURE THIS WILL WORK
+            req += (status != null)? ", status = ? " : "";
+            req += (seller != null)? ", seller = ? " : "";
             req += "WHERE id = "+id+";";
            
         try{
@@ -284,18 +284,18 @@ public class Product {
         p.date = result.getDate("date");
         p.status = result.getString("status");
         p.description = result.getString("description");
+        p.adress = result.getString("adress");
         Long buyerId = result.getLong("buyer");
         Long sellerId = result.getLong("seller");
-        Long countryId = result.getLong("country");
         Long categoryId = result.getLong("category");
         p.imagePath = result.getString("image");
         
-        p.buyer = new User(); p.seller = new User(); p.country = new Local();
+        
+        p.buyer = new User(); p.seller = new User();
         p.category = new Category();
         
         p.buyer.getUser(buyerId);
         p.seller.getUser(sellerId);
-        p.country.getLocal(countryId);
         p.category.getCategory(categoryId);
     }
     
@@ -303,13 +303,12 @@ public class Product {
         String req = "SELECT * FROM products WHERE 1 ";
             req += (p.id != null)? "AND id = "+p.id : "";
             req += (p.label != null)? "AND label = "+p.label : "";
-            req += (p.basicPrice != null)? "AND basicPrice = "+p.basicPrice : "";
             req += (p.date != null)? "AND date = "+p.date : "";
             req += (p.status != null)? "AND status = "+p.status : "";
             req += (p.buyer.getId() != null)? "AND buyer = "+p.buyer.getId() : "";
             req += (p.seller.getId() != null)? "AND seller = "+p.seller.getId() : "";
-            req += (p.country.getCountry() != null)? "AND country = "+p.country.getCountry() : "";
             req += (p.category.getLabel() != null)? "AND category = "+p.category.getLabel() : "";
+            req += ";";
         try{
             stat = cnx.prepareStatement(req);
             ResultSet result = stat.executeQuery();

@@ -13,14 +13,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 /**
  *
  * @author amine
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class User {
 
     private final static String URL = "jdbc:mysql://localhost:3306/enchers";
@@ -36,12 +36,11 @@ public class User {
     private String type;
     private String tel;
     private String name;
-    private Local country;
+    private String adress;
 
     
     
      public User() {
-         country = new Local();
         try{
             Class.forName("com.mysql.jdbc.Driver");
             cnx = DriverManager.getConnection(URL, USER, PWD);
@@ -95,8 +94,8 @@ public class User {
         return name;
     }
 
-    public Local getCountry() {
-        return country;
+    public String getAdress() {
+        return adress;
     }
 
     public void setPwd(String pwd) {
@@ -107,8 +106,8 @@ public class User {
         this.name = name;
     }
 
-    public void setCountry(Local country) {
-        this.country = country;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
   
@@ -116,19 +115,19 @@ public class User {
     
     
 
-    public String addUser(){ // NOT YET TESTED
-        if(alreadyExist(login)) return "index.xhtml?inscription=false";
+    public String addUser(){ // TESTED WITH SUCCESS
+        if(alreadyExist(login)) return "produiuts.xhtml?inscription=false";
         
-        String req = "INSERT INTO users VALUES (null, '?','?','?','?','?',?);";
+        String req = "INSERT INTO users VALUES (null, ? , ? , ? , ? , ? , ? );";
         
         try{
             stat = cnx.prepareStatement(req);
             stat.setString(1, login);
-            stat.setString(1, pwd);
-            stat.setString(1, type);
-            stat.setString(1, tel);
-            stat.setString(1, name);
-            stat.setLong(1, country.getId());
+            stat.setString(2, pwd);
+            stat.setString(3, type);
+            stat.setString(4, tel);
+            stat.setString(5, name);
+            stat.setString(6, adress);
 
             stat.executeUpdate();
             
@@ -181,9 +180,9 @@ public class User {
         u.type = result.getString("type");
         u.tel = result.getString("tel");
         u.name = result.getString("name");
-        Long countryId = result.getLong("country");        
-        u.country = new Local();
-        u.country.getLocal(countryId);
+        u.adress = result.getString("adress");
+        
+        
     }
    
    public static User getElementById(Long userId){ //NOT YET TESTED
@@ -215,7 +214,7 @@ public class User {
             req += (u.login != null)? "AND login = "+u.login : "";
             req += (u.type != null)? "AND type = "+u.type : "";
             req += (u.name != null)? "AND name = "+u.name : "";
-            req += (u.country.getCountry() != null)? "AND country = "+u.country.getCountry() : "";
+            req +=";";
         try{
             stat = cnx.prepareStatement(req);
             ResultSet result = stat.executeQuery();
@@ -236,13 +235,13 @@ public class User {
     }
    
    
-   public boolean alreadyExist(String login){ //NOT YET TESTED
+   public boolean alreadyExist(String login){ //TESTED WITH SUCCESS
         
-        String req = "SELECT id FROM users WHERE login = 'gg';";
+        String req = "SELECT id FROM users WHERE login = ?;";
 
         try{
             stat = cnx.prepareStatement(req);
-         //   stat.setString(1,"gggg");
+            stat.setString(1,login);
             ResultSet result = stat.executeQuery();
             return result.isBeforeFirst();
             
@@ -255,7 +254,7 @@ public class User {
     }
    
    public boolean exist(String login , String pwd){
-       String req = "SELECT id FROM users WHERE login = '?' AND pwd = '?';";
+       String req = "SELECT id FROM users WHERE login = ? AND pwd = ?;";
        
        try{
            stat = cnx.prepareStatement(req);
@@ -270,7 +269,7 @@ public class User {
    }
   
    public Long getIdByLogin(String login){
-       String req = "SELECT id FROM users WHERE login = '?'";
+       String req = "SELECT id FROM users WHERE login = ?";
        try{
            stat = cnx.prepareStatement(req);
            stat.setString(1,login);
