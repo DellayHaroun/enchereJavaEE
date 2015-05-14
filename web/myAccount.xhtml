@@ -186,8 +186,11 @@
                     <p:outputLabel  value="Country:"/>
                     <p:inputText value="#{product.adress}"  required="true"></p:inputText>
                     
-                    <p:outputLabel value="Category"/>
-                    <p:inputText value="#{product.category}"  required="true"></p:inputText>
+                    <p:outputLabel value="Category"></p:outputLabel>
+                   <p:selectOneMenu id="Category" value="#{product.category}">
+                       <f:selectItems  value="#{category.allCategory}" var="i"  itemLabel="#{i.label}" itemValue="#{label}" />
+                   </p:selectOneMenu>
+                   
                     <p:outputLabel value="uplode picture" ></p:outputLabel>
                     <h:inputFile id="file" value="#{product.image}"/>
                     
