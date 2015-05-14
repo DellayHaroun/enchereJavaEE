@@ -34,7 +34,7 @@ public class Product {
     private final static String PWD = "";
     
     private static Connection cnx = null;
-    private PreparedStatement stat = null;
+    private static PreparedStatement stat = null;
     
     
     private Long id;
@@ -252,7 +252,7 @@ public class Product {
     }
     
     
-    public Product getElementById(Long productId){
+    public static Product getElementById(Long productId){
         String req = "SELECT * FROM products WHERE id = ?";
         
         try{
@@ -272,7 +272,7 @@ public class Product {
     }
     
     
-    private void fillProduct(Product p , ResultSet result)throws SQLException{ //NOT YET TESTED
+    private static void fillProduct(Product p , ResultSet result)throws SQLException{ //NOT YET TESTED
         
         p.id = result.getLong("id");
         p.label = result.getString("label");
