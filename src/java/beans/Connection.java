@@ -51,8 +51,11 @@ public class Connection {
             return "index.xhtml?connected=false";
         
         Long id = u.getIdByLogin(login);
+        
+        String login = User.getElementById(id).getLogin();
 
          FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("id", id);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("login", login);
         return "index.xhtml?connected=true";
     }
     

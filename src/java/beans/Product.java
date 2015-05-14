@@ -163,6 +163,9 @@ public class Product {
     }
 
 
+    
+        
+
   
  //-------------------------------DAO----------------------------------------
     
@@ -170,9 +173,10 @@ public class Product {
 
     public void addProduct(){ //NOT YET TESTED
         upload();
-  //      Long userId =(Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
-    //    System.out.println(userId);
-           buyer =new User(); 
+        //Long userId =(Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
+        //System.out.println(userId);
+        buyer = new User(); seller = new User(); buyer.setId(1L);seller.setId(1L);
+        
         status = "pending";
         String req = "INSERT INTO products VALUES( null , ?, ?, ?, ?"
                 + ", ?, ?, ?, ?, ?, ?, ?);";
