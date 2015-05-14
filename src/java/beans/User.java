@@ -23,7 +23,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class User {
 
-    private final static String URL = "jdbc:mysql://localhost:3306/test";
+    private final static String URL = "jdbc:mysql://localhost:3306/enchers";
     private final static String USER = "root";
     private final static String PWD = "";
     
@@ -41,7 +41,7 @@ public class User {
     
     
      public User() {
-        
+         country = new Local();
         try{
             Class.forName("com.mysql.jdbc.Driver");
             cnx = DriverManager.getConnection(URL, USER, PWD);
@@ -117,7 +117,6 @@ public class User {
     
 
     public String addUser(){ // NOT YET TESTED
-        
         if(alreadyExist(login)) return "index.xhtml?inscription=false";
         
         String req = "INSERT INTO users VALUES (null, '?','?','?','?','?',?);";
@@ -130,10 +129,13 @@ public class User {
             stat.setString(1, tel);
             stat.setString(1, name);
             stat.setLong(1, country.getId());
-            
+
             stat.executeUpdate();
             
         }catch(SQLException e){
+            e.printStackTrace();
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
         return "index.xhtml?inscription=true";
@@ -236,11 +238,11 @@ public class User {
    
    public boolean alreadyExist(String login){ //NOT YET TESTED
         
-        String req = "SELECT id FROM users WHERE login = '?';";
+        String req = "SELECT id FROM users WHERE login = 'gg';";
 
         try{
             stat = cnx.prepareStatement(req);
-            stat.setString(1,login);
+         //   stat.setString(1,"gggg");
             ResultSet result = stat.executeQuery();
             return result.isBeforeFirst();
             

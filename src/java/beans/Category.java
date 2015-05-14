@@ -19,7 +19,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class Category {
 
-    private final static String URL = "jdbc:mysql://localhost:3306/test";
+    private final static String URL = "jdbc:mysql://localhost:3306/enchers";
     private final static String USER = "root";
     private final static String PWD = "";
     private Connection cnx = null;
@@ -94,6 +94,7 @@ public class Category {
             ResultSet result = stat.executeQuery();
             
             while(result.next()){
+                System.out.print("helllllllllllllllllllllllllllllllo");
                 Category c = new Category();
                 fillCategory(c,result);
                 l.add(c);

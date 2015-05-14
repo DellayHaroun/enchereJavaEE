@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
    <h:head>
 <title>Electronix Store</title>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
@@ -118,58 +119,43 @@
           <div class="contact_form">
             <div class="form_row">
                 <h:form class="form_row">
-                    <tr>
-                    <td>
-                    <h:selectOneRadio class="contact" value ="Enter Your Compte Type:">
-                    <f:selectItem itemLabel="user" itemValue="user"></f:selectItem>
-                    <f:selectItem itemLabel="biblio" itemValue="biblio"></f:selectItem>
-                    </h:selectOneRadio>
-                    </td>
-                     </tr>
-                    <h:outputLabel class="contact" value="Enter  Your Compte Type : " />
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                    <h:outputLabel class="contact" value="Enter your Full name: " />
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                    <h:outputLabel class="contact" value="Enter your Adresse: " />
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                    <h:outputLabel class="contact" value="Enter your Town: " />
-                    <h:inputText value="#{customerController.customer.firstName}" />
-                    
-                    <h:outputLabel class="contact" value="Enter your Email: " />
-                    <h:inputText value="#{customerController.customer.firstName}" />
+                  
+                    <h:panelGrid columns="2" cellpadding="5" >
+                   
                     
                     
-                    <h:outputLabel class="contact" value="Retape your Email:" />
-                    <h:inputText value="#{customerController.customer.firstName}" />
+                  <p:outputLabel class="contact" value="Name: " />
+                    <p:inputText value="#{user.name}" required="true" > </p:inputText>
+ 
+                        
                     
-                    <h:outputLabel class="contact" value="Enter your Phone:"/>
-                    <h:inputText value="#{customerController.customer.firstName}" />
+                    <p:outputLabel class="contact" value="Adresse: " />
+                    <p:inputText value="#{user.country.country}" required="true" > </p:inputText>
                     
-                    <h:outputLabel class="contact" value="Enter your login:" />
-                    <h:inputText value="#{customerController.customer.firstName}" />
                     
-                        <h:outputLabel class="contact" value="Enter your passWord " />
-                        <h:inputSecret value="#{customerController.customer.firstName}" />
                     
-                    <h:outputLabel class="contact" value="Confirm your passWord: " />
-                    <h:inputSecret value="#{customerController.customer.firstName}" />
-<<<<<<< HEAD
-                </p:panel>  
-=======
->>>>>>> 33f97ea707ab882d1d2559c61f5193033a667804
-                </h:form>
+                    <p:outputLabel class="contact" value="Phone:"/>
+                    <p:inputText value="#{user.tel}"  required="true"></p:inputText>
+                    
+                    <p:outputLabel class="contact" value="login:" />
+                    <p:inputText value="#{user.login}"  required="true"></p:inputText>
+                    
+                    <h:outputLabel class="contact" value="passWord " />
+                    <h:inputSecret value="#{user.pwd}" required="true"/>
+                    
+                    <h:outputLabel class="contact" value="passWord again: " />
+                    <h:inputSecret  required="true"/>
+                    
+                    
+                   <h:commandButton value="Save"  action="#{user.addUser}" />
+                  
+                    </h:panelGrid>
+                    
+               
+            
+          </h:form>
+            </div>
               
-          
-           
-            
-            
-            
-            
-            <div class="form_row"> <a href="inscrire.html" class="contact">send</a> </div>
-          </div>
         </div>
         <div class="bottom_prod_box_big"></div>
       </div>
