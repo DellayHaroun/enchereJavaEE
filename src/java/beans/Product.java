@@ -5,6 +5,9 @@
  */
 package beans;
 
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -15,6 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -28,7 +34,7 @@ public class Product {
     private final static String PWD = "";
     
     private static Connection cnx = null;
-    private PreparedStatement stat = null;
+    private static PreparedStatement stat = null;
     
     
     private Long id;
@@ -42,7 +48,8 @@ public class Product {
     private User seller;
     private Local country;
     private Category category;
-    private String image;
+    private Part image;
+    private String imagePath;
 
     
     public Product() {
@@ -55,6 +62,15 @@ public class Product {
         }   
     }
 
+    
+    public void setImage(Part image) {
+        this.image = image;
+    }
+
+    public Part getImage() {
+        return image;
+    }
+    
     public Long getId() {
         return id;
     }
@@ -99,9 +115,6 @@ public class Product {
         return category;
     }
 
-    public String getImage() {
-        return image;
-    }
 
     public void setId(Long id) {
         this.id = id;
@@ -146,11 +159,6 @@ public class Product {
     public void setCategory(Category category) {
         this.category = category;
     }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-    
     
   
  //-------------------------------DAO----------------------------------------
@@ -158,6 +166,7 @@ public class Product {
 
 
     public void addProduct(){ //NOT YET TESTED
+        upload();
         String req = "INSERT INTO products VALUES( null , '?', ?, ?, '?'"
                 + ", '?', '?', ?, ?, ?, ?, '?');";
         try {
@@ -172,7 +181,7 @@ public class Product {
             stat.setLong(8,seller.getId());
             stat.setLong(9,country.getId());
             stat.setLong(10,category.getId());
-            stat.setString(11,image);
+            stat.setString(11,imagePath);
             
             stat.executeUpdate();
             
@@ -216,24 +225,24 @@ public class Product {
         return l;   
     }
     
-    public void updateProduct(Product p){//NOT YET TESTED
+    public void updateProduct(){//NOT YET TESTED
         String req = "UPDATE products SET id = ?";
-            req += (p.label != null)? ", label = '?' " : "";
-            req += (p.quantity != null)? ", quantity = ? " : "";
-            req += (p.date != null)? ", date = '?'" : ""; //NOT SURE THIS WILL WORK
-            req += (p.status != null)? ", status = '?' " : "";
-            req += (p.seller != null)? ", seller = '?' " : "";
-            req += "WHERE id = "+p.id+";";
+            req += (label != null)? ", label = '?' " : "";
+            req += (quantity != null)? ", quantity = ? " : "";
+            req += (date != null)? ", date = '?'" : ""; //NOT SURE THIS WILL WORK
+            req += (status != null)? ", status = '?' " : "";
+            req += (seller != null)? ", seller = '?' " : "";
+            req += "WHERE id = "+id+";";
            
         try{
             stat = cnx.prepareStatement(req);
             
-            stat.setLong(1, p.id);
-            stat.setString(2, p.label);
-            stat.setInt(3, p.quantity);
-            stat.setDate(4, p.date);
-            stat.setString(5, p.status);
-            stat.setLong(6, p.seller.getId());
+            stat.setLong(1, id);
+            stat.setString(2, label);
+            stat.setInt(3, quantity);
+            stat.setDate(4, date);
+            stat.setString(5, status);
+            stat.setLong(6, seller.getId());
             
             stat.executeQuery();
             
@@ -243,7 +252,7 @@ public class Product {
     }
     
     
-    public Product getElementById(Long productId){
+    public static Product getElementById(Long productId){
         String req = "SELECT * FROM products WHERE id = ?";
         
         try{
@@ -263,7 +272,7 @@ public class Product {
     }
     
     
-    private void fillProduct(Product p , ResultSet result)throws SQLException{ //NOT YET TESTED
+    private static void fillProduct(Product p , ResultSet result)throws SQLException{ //NOT YET TESTED
         
         p.id = result.getLong("id");
         p.label = result.getString("label");
@@ -276,7 +285,7 @@ public class Product {
         Long sellerId = result.getLong("seller");
         Long countryId = result.getLong("country");
         Long categoryId = result.getLong("category");
-        p.image = result.getString("image");
+        p.imagePath = result.getString("image");
         
         p.buyer = new User(); p.seller = new User(); p.country = new Local();
         p.category = new Category();
@@ -336,10 +345,28 @@ public class Product {
         }
         
         return false;
-        
     }
     
-    
-    
-    
+    public void upload(){
+        try{
+            String name = image.getSubmittedFileName();
+            
+            ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
+                .getExternalContext().getContext();
+            imagePath = ctx.getRealPath("/")+"../../web/ressources/images/"+name;
+              
+            InputStream in = image.getInputStream();
+           
+            OutputStream out = new FileOutputStream(imagePath);
+         
+            
+            int c;
+            while((c = in.read() ) != -1 ){
+                out.write(c);
+            }         
+        }  
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -28,7 +28,7 @@ public class User {
     private final static String PWD = "";
     
     private static Connection cnx = null;
-    private PreparedStatement stat = null;
+    private static PreparedStatement stat = null;
 
     private Long id;
     private String login;
@@ -173,7 +173,7 @@ public class User {
         return l;   
     }
     
-   private void fillUser(User u ,ResultSet result)throws SQLException{ //NOT YET TESTED
+   private static void fillUser(User u ,ResultSet result)throws SQLException{ //NOT YET TESTED
         
         u.id =result.getLong("id");
         u.login = result.getString("login");
@@ -186,7 +186,7 @@ public class User {
         u.country.getLocal(countryId);
     }
    
-   public User getElementById(Long userId){ //NOT YET TESTED
+   public static User getElementById(Long userId){ //NOT YET TESTED
         String req = "SELECT * FROM users WHERE id = ?";
         
         try{

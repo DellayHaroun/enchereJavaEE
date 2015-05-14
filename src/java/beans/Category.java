@@ -85,7 +85,9 @@ public class Category {
         }
     }
     
-    public List<Category> getAllCategory(){ // NOT YET TESTED
+    public List<Category> getAllCategory(){ //TESTED WITH SUCCESS
+
+        
         String req = "SELECT * FROM category;";
         List<Category> l = new ArrayList<Category>();
         
@@ -94,11 +96,13 @@ public class Category {
             ResultSet result = stat.executeQuery();
             
             while(result.next()){
-                System.out.print("helllllllllllllllllllllllllllllllo");
+
                 Category c = new Category();
                 fillCategory(c,result);
                 l.add(c);
             }    
+                
+
         }catch(SQLException e)
         {
             e.printStackTrace();
