@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
 
 /**
@@ -164,6 +166,7 @@ public class Product {
 
 
     public void addProduct(){ //NOT YET TESTED
+        upload();
         String req = "INSERT INTO products VALUES( null , '?', ?, ?, '?'"
                 + ", '?', '?', ?, ?, ?, ?, '?');";
         try {
@@ -178,7 +181,7 @@ public class Product {
             stat.setLong(8,seller.getId());
             stat.setLong(9,country.getId());
             stat.setLong(10,category.getId());
-            stat.setString(11,image);
+            stat.setString(11,imagePath);
             
             stat.executeUpdate();
             
@@ -222,24 +225,24 @@ public class Product {
         return l;   
     }
     
-    public void updateProduct(Product p){//NOT YET TESTED
+    public void updateProduct(){//NOT YET TESTED
         String req = "UPDATE products SET id = ?";
-            req += (p.label != null)? ", label = '?' " : "";
-            req += (p.quantity != null)? ", quantity = ? " : "";
-            req += (p.date != null)? ", date = '?'" : ""; //NOT SURE THIS WILL WORK
-            req += (p.status != null)? ", status = '?' " : "";
-            req += (p.seller != null)? ", seller = '?' " : "";
-            req += "WHERE id = "+p.id+";";
+            req += (label != null)? ", label = '?' " : "";
+            req += (quantity != null)? ", quantity = ? " : "";
+            req += (date != null)? ", date = '?'" : ""; //NOT SURE THIS WILL WORK
+            req += (status != null)? ", status = '?' " : "";
+            req += (seller != null)? ", seller = '?' " : "";
+            req += "WHERE id = "+id+";";
            
         try{
             stat = cnx.prepareStatement(req);
             
-            stat.setLong(1, p.id);
-            stat.setString(2, p.label);
-            stat.setInt(3, p.quantity);
-            stat.setDate(4, p.date);
-            stat.setString(5, p.status);
-            stat.setLong(6, p.seller.getId());
+            stat.setLong(1, id);
+            stat.setString(2, label);
+            stat.setInt(3, quantity);
+            stat.setDate(4, date);
+            stat.setString(5, status);
+            stat.setLong(6, seller.getId());
             
             stat.executeQuery();
             
@@ -282,7 +285,7 @@ public class Product {
         Long sellerId = result.getLong("seller");
         Long countryId = result.getLong("country");
         Long categoryId = result.getLong("category");
-        p.image = result.getString("image");
+        p.imagePath = result.getString("image");
         
         p.buyer = new User(); p.seller = new User(); p.country = new Local();
         p.category = new Category();
@@ -346,12 +349,17 @@ public class Product {
     
     public void upload(){
         try{
-            
-            InputStream in = image.getInputStream();
             String name = image.getSubmittedFileName();
-            String workingDir = System.getProperty("user.dir");
-
-            OutputStream out = new FileOutputStream(name);
+            
+            ServletContext ctx = (ServletContext) FacesContext.getCurrentInstance()
+                .getExternalContext().getContext();
+            imagePath = ctx.getRealPath("/")+"../../web/ressources/images/"+name;
+              
+            InputStream in = image.getInputStream();
+           
+            OutputStream out = new FileOutputStream(imagePath);
+         
+            
             int c;
             while((c = in.read() ) != -1 ){
                 out.write(c);
@@ -362,4 +370,3 @@ public class Product {
         }
     }
 }
-

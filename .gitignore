@@ -5,3 +5,5 @@ src/conf/
 build/
 nbproject/*
 src/conf/
+web/ressources/images/*.png
+
