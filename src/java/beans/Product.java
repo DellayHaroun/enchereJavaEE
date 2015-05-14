@@ -48,6 +48,14 @@ public class Product {
     private User seller;
     private String adress;
     private String category;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
     private Part image;
     private String imagePath;
 
@@ -162,8 +170,9 @@ public class Product {
 
     public void addProduct(){ //NOT YET TESTED
         upload();
-        Long userId =(Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
-        System.out.println(userId);
+  //      Long userId =(Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
+    //    System.out.println(userId);
+           buyer =new User(); 
         status = "pending";
         String req = "INSERT INTO products VALUES( null , ?, ?, ?, ?"
                 + ", ?, ?, ?, ?, ?, ?, ?);";
@@ -172,7 +181,8 @@ public class Product {
             stat.setString(1,label);
             stat.setInt(2,quantity);
             stat.setFloat(3,basicPrice);
-            stat.setDate(4, (java.sql.Date) date);
+            java.sql.Date d = new java.sql.Date(date.getTime());
+            stat.setDate(4,  d);
             stat.setString(5,status);
             stat.setString(6,description);
             stat.setLong(7,buyer.getId());
