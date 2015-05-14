@@ -25,7 +25,6 @@ public class Category {
     private Connection cnx = null;
     private PreparedStatement stat = null;
     
-    private Long id;
     private String label;
     
     
@@ -39,18 +38,12 @@ public class Category {
         } 
     }
 
-    public Long getId() {
-        return id;
-    }
-
+   
     public String getLabel() {
         return label;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+   
     public void setLabel(String label) {
         this.label = label;
     }
@@ -70,20 +63,6 @@ public class Category {
         }
     }
     
-    public void deleteCategory(Category c){ //NOT YET TESTED
-        String req = "DELETE FROM category WHERE  1 ";
-            req += (c.id != null)? "AND id = "+ c.id : "";
-            req += (c.label != null)? "AND label = '"+c.label+"' " : "";
-            req += ";";
-            
-        try{
-            stat = cnx.prepareStatement(req);
-            stat.executeUpdate();
-            
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-    }
     
     public List<Category> getAllCategory(){ //TESTED WITH SUCCESS
 
@@ -112,45 +91,7 @@ public class Category {
     }
     
     private void fillCategory(Category c , ResultSet result)throws SQLException{ //NOT YET TESTED
-        c.id = result.getLong("id");
         c.label = result.getString("label");
     }
     
-    public void updateCategory(Category c){//NOT YET TESTED
-        String req = "UPDATE category c SET label = ? WHERE id = ?";
-        
-        try{
-            stat = cnx.prepareStatement(req);
-            stat.setString(1, c.label);
-            stat.setLong(2, c.id);
-            
-            stat.executeQuery();
-            
-            
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        
-    }
-    
-    public Category getCategory(Long categoryId){ //NOT YET TESTED
-        String req = "SELECT * FROM category WHERE id = ?";
-        
-        try{
-            stat = cnx.prepareStatement(req);
-            stat.setLong(1, categoryId);
-            
-            ResultSet result = stat.executeQuery();
-            result.next();
-            
-            id = categoryId;
-            label = result.getString("label");
-            
-            return this;
-            
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
 }            

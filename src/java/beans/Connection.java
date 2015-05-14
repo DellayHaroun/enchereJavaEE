@@ -52,7 +52,7 @@ public class Connection {
         
         Long id = u.getIdByLogin(login);
 
-        Object o = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("id", id);
+         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("id", id);
         return "index.xhtml?connected=true";
     }
     

@@ -47,12 +47,13 @@ public class Product {
     private User buyer;
     private User seller;
     private String adress;
-    private Category category;
+    private String category;
     private Part image;
     private String imagePath;
 
     
     public Product() {
+        buyer = new User();
         try{
             Class.forName("com.mysql.jdbc.Driver");
             cnx = DriverManager.getConnection(URL, USER, PWD);
@@ -111,10 +112,7 @@ public class Product {
         return adress;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
+   
 
     public void setId(Long id) {
         this.id = id;
@@ -156,10 +154,7 @@ public class Product {
         this.adress = adress;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-    
+
   
  //-------------------------------DAO----------------------------------------
     
@@ -183,7 +178,7 @@ public class Product {
             stat.setLong(7,buyer.getId());
             stat.setLong(8,seller.getId());
             stat.setString(9, adress);
-            stat.setLong(10,category.getId());
+            stat.setString(10,category);
             stat.setString(11,imagePath);
             
             stat.executeUpdate();
@@ -287,16 +282,14 @@ public class Product {
         p.adress = result.getString("adress");
         Long buyerId = result.getLong("buyer");
         Long sellerId = result.getLong("seller");
-        Long categoryId = result.getLong("category");
+        p.category = result.getString("category");
         p.imagePath = result.getString("image");
         
         
         p.buyer = new User(); p.seller = new User();
-        p.category = new Category();
         
         p.buyer.getUser(buyerId);
         p.seller.getUser(sellerId);
-        p.category.getCategory(categoryId);
     }
     
     public List<Product> searchProduct(Product p){ //NOT YET TESTED
@@ -307,7 +300,7 @@ public class Product {
             req += (p.status != null)? "AND status = "+p.status : "";
             req += (p.buyer.getId() != null)? "AND buyer = "+p.buyer.getId() : "";
             req += (p.seller.getId() != null)? "AND seller = "+p.seller.getId() : "";
-            req += (p.category.getLabel() != null)? "AND category = "+p.category.getLabel() : "";
+            req += (p.category != null)? "AND category = "+p.category : "";
             req += ";";
         try{
             stat = cnx.prepareStatement(req);
