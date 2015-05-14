@@ -170,7 +170,7 @@ public class Product {
     
 
 
-    public void addProduct(){ //NOT YET TESTED
+    public void addProduct(){ //TESTED WITH SECCESS
         upload();
         //Long userId =(Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
         //System.out.println(userId);
