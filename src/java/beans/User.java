@@ -23,7 +23,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class User {
 
-    private final static String URL = "jdbc:mysql://localhost:3306/test";
+    private final static String URL = "jdbc:mysql://localhost:3306/enchers";
     private final static String USER = "root";
     private final static String PWD = "";
     

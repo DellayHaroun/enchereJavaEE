@@ -29,7 +29,7 @@ import javax.servlet.http.Part;
 @ManagedBean
 @RequestScoped
 public class Product {
-    private final static String URL = "jdbc:mysql://localhost:3306/test";
+    private final static String URL = "jdbc:mysql://localhost:3306/enchers";
     private final static String USER = "root";
     private final static String PWD = "";
     
