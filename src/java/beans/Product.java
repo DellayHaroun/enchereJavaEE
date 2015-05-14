@@ -167,6 +167,9 @@ public class Product {
 
     public void addProduct(){ //NOT YET TESTED
         upload();
+        Long userId =(Long) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
+        System.out.println(userId);
+        status = "pending";
         String req = "INSERT INTO products VALUES( null , '?', ?, ?, '?'"
                 + ", '?', '?', ?, ?, ?, ?, '?');";
         try {

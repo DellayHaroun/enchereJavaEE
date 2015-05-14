@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
  <h:head>
 <title>Electronix Store</title>
 <meta http-equiv="Content-Type" content="text/html; charset=windows-1252" />
@@ -90,6 +92,7 @@
     </div>
     <!-- end of left content -->
     <div class="center_content">
+        
       <div class="center_title_bar">Latest Products</div>
       <div class="prod_box">
         <div class="top_prod_box"></div>
@@ -151,64 +154,55 @@
         <div class="bottom_prod_box"></div>
         <div class="prod_details_tab"> <a href="#" title="header=[Add to cart] body=[&nbsp;] fade=[on]"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></a> <a href="#" title="header=[Specials] body=[&nbsp;] fade=[on]"><img src="images/favs.gif" alt="" border="0" class="left_bt" /></a> <a href="#" title="header=[Gifts] body=[&nbsp;] fade=[on]"><img src="images/favorites.gif" alt="" border="0" class="left_bt" /></a> <a href="details.html" class="prod_details">details</a> </div>
       </div>
-      <div class="center_title_bar">Recommended Products</div>
-      <div class="prod_box">
-        <div class="top_prod_box"></div>
-        <div class="center_prod_box">
-          <div class="product_title"><a href="details.html">Motorola 156 MX-VL</a></div>
-          <div class="product_img"><a href="details.html"><img src="images/laptop.gif" alt="" border="0" /></a></div>
-          <div class="prod_price"><span class="reduce">350$</span> <span class="price">270$</span></div>
-        </div>
-        <div class="bottom_prod_box"></div>
-        <div class="prod_details_tab"> <a href="#" title="header=[Add to cart] body=[&nbsp;] fade=[on]"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></a> <a href="#" title="header=[Specials] body=[&nbsp;] fade=[on]"><img src="images/favs.gif" alt="" border="0" class="left_bt" /></a> <a href="#" title="header=[Gifts] body=[&nbsp;] fade=[on]"><img src="images/favorites.gif" alt="" border="0" class="left_bt" /></a> <a href="details.html" class="prod_details">details</a> </div>
-      </div>
-      <div class="prod_box">
-        <div class="top_prod_box"></div>
-        <div class="center_prod_box">
-          <div class="product_title"><a href="details.html">Iphone Apple</a></div>
-          <div class="product_img"><a href="details.html"><img src="images/p4.gif" alt="" border="0" /></a></div>
-          <div class="prod_price"><span class="price">270$</span></div>
-        </div>
-        <div class="bottom_prod_box"></div>
-        <div class="prod_details_tab"> <a href="#" title="header=[Add to cart] body=[&nbsp;] fade=[on]"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></a> <a href="#" title="header=[Specials] body=[&nbsp;] fade=[on]"><img src="images/favs.gif" alt="" border="0" class="left_bt" /></a> <a href="#" title="header=[Gifts] body=[&nbsp;] fade=[on]"><img src="images/favorites.gif" alt="" border="0" class="left_bt" /></a> <a href="details.html" class="prod_details">details</a> </div>
-      </div>
-      <div class="prod_box">
-        <div class="top_prod_box"></div>
-        <div class="center_prod_box">
-          <div class="product_title"><a href="details.html">Samsung Webcam</a></div>
-          <div class="product_img"><a href="details.html"><img src="images/p5.gif" alt="" border="0" /></a></div>
-          <div class="prod_price"><span class="reduce">350$</span> <span class="price">270$</span></div>
-        </div>
-        <div class="bottom_prod_box"></div>
-        <div class="prod_details_tab"> <a href="#" title="header=[Add to cart] body=[&nbsp;] fade=[on]"><img src="images/cart.gif" alt="" border="0" class="left_bt" /></a> <a href="#" title="header=[Specials] body=[&nbsp;] fade=[on]"><img src="images/favs.gif" alt="" border="0" class="left_bt" /></a> <a href="#" title="header=[Gifts] body=[&nbsp;] fade=[on]"><img src="images/favorites.gif" alt="" border="0" class="left_bt" /></a> <a href="details.html" class="prod_details">details</a> </div>
-      </div>
     </div>
-    <!-- end of center content -->
+    
+  </div>
+      
+      
+      <!-- end of center content -->
     <div class="right_content">
       <div class="shopping_cart">
-        <div class="cart_title">Shopping cart</div>
-        <div class="cart_details"> 3 items <br />
-          <span class="border_cart"></span> Total: <span class="price">350$</span> </div>
-        <div class="cart_icon"><a href="#" title="header=[Checkout] body=[&nbsp;] fade=[on]"><img src="images/shoppingcart.png" alt="" width="48" height="48" border="0" /></a></div>
-      </div>
-      <div class="title_box">What\92s new</div>
-      <div class="border_box">
-        <div class="product_title"><a href="details.html">Motorola 156 MX-VL</a></div>
-        <div class="product_img"><a href="details.html"><img src="images/p2.gif" alt="" border="0" /></a></div>
-        <div class="prod_price"><span class="reduce">350$</span> <span class="price">270$</span></div>
-      </div>
-      <div class="title_box">Manufacturers</div>
-      <ul class="left_menu">
-        <li class="odd"><a href="#">Sony</a></li>
-        <li class="even"><a href="#">Samsung</a></li>
-        <li class="odd"><a href="#">Daewoo</a></li>
-        <li class="even"><a href="#">LG</a></li>
-        <li class="odd"><a href="#">Fujitsu Siemens</a></li>
-        <li class="even"><a href="#">Motorola</a></li>
-        <li class="odd"><a href="#">Phillips</a></li>
-        <li class="even"><a href="#">Beko</a></li>
-      </ul>
-     
+        <div class="cart_title">Add Product</div>
+        <h:form  class="form_row" enctype="multipart/form-data" >
+            <h:panelGrid columns="1" cellpadding="0" >
+                    
+                    <p:outputLabel  value="Label: " />
+                    <p:inputText value="#{product.label}" required="true" > </p:inputText>
+                    
+                    <p:outputLabel  value="Quantity: " />
+                    <p:inputText value="#{product.quantity}" required="true" > </p:inputText>
+                    
+                    <p:outputLabel  value="BasicPrice"/>
+                    <p:inputText value="#{product.basicPrice}"  required="true"></p:inputText>
+                    
+                    
+                    <p:outputLabel  value="Description"/>
+                    <p:inputTextarea value="#{product.description}"  required="true" ></p:inputTextarea>
+                    
+                    <p:outputLabel for="dateDeb"  value="Date of the end of the auction:" />
+                    <p:calendar id="dateDeb" value="#{product.date}" pattern="yyyy-MM-dd hh:mm:ss" ></p:calendar>
+                     
+                    
+                    <p:outputLabel  value="Country:"/>
+                    <p:inputText value="#{product.adresse}"  required="true"></p:inputText>
+                    
+                    <p:outputLabel value="Category"/>
+                    <p:inputText value="#{product.category}"  required="true"></p:inputText>
+                    <p:outputLabel value="uplode picture" ></p:outputLabel>
+                    <h:inputFile id="file" value="#{product.image}"/>
+                    
+                    
+                    <h:commandButton value="Save"  action="#{product.addProduct()}" />
+                </h:panelGrid>
+   
+    </h:form>
+   
+        
+        
+        
+        
+        
+        
     </div>
     <!-- end of right content -->
   </div>
