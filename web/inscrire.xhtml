@@ -118,42 +118,52 @@
         <div class="center_prod_box_big">
           <div class="contact_form">
             <div class="form_row">
+                
+                
+                
                 <h:form class="form_row">
-                  
-                    <h:panelGrid columns="2" cellpadding="5" >
-                   
-                    
-                    
+                    <h:panelGrid columns="2" cellpadding="5 " >
                   <p:outputLabel class="contact" value="Name: " />
                     <p:inputText value="#{user.name}" required="true" > </p:inputText>
- 
-                        
-                    
                     <p:outputLabel class="contact" value="Adresse: " />
-                    <p:inputText value="#{user.country.country}" required="true" > </p:inputText>
+                    <p:inputText value="#{user.adress}" required="true" > </p:inputText>
                     
-                    
+                   
                     
                     <p:outputLabel class="contact" value="Phone:"/>
                     <p:inputText value="#{user.tel}"  required="true"></p:inputText>
-                    
                     <p:outputLabel class="contact" value="login:" />
                     <p:inputText value="#{user.login}"  required="true"></p:inputText>
-                    
                     <h:outputLabel class="contact" value="passWord " />
                     <h:inputSecret value="#{user.pwd}" required="true"/>
-                    
                     <h:outputLabel class="contact" value="passWord again: " />
                     <h:inputSecret  required="true"/>
                     
                     
+                    <h:outputLabel class="contact" value="type" />
+                     <p:selectOneRadio class="contact" value="#{user.type}">
+                        <f:selectItem itemLabel="shop" itemValue="shop"/>
+                        <f:selectItem itemLabel="particular" itemValue="particular"/>
+                    </p:selectOneRadio>
+                    
+                    <br/>
                    <h:commandButton value="Save"  action="#{user.addUser}" />
                   
+                   
+                   
+                   
+                   
                     </h:panelGrid>
-                    
                
-            
           </h:form>
+                
+                
+                
+                
+                
+                
+                
+                
             </div>
               
         </div>
